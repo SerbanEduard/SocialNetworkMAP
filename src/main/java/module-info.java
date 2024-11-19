@@ -6,5 +6,7 @@ module org.example.socialnetworkmap_good {
     requires org.kordamp.bootstrapfx.core;
 
     opens org.example.socialnetworkmap_good to javafx.fxml;
+    opens Controller to javafx.fxml;
     exports org.example.socialnetworkmap_good;
+    exports Controller;
 }
