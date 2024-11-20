@@ -4,6 +4,7 @@ module org.example.socialnetworkmap_good {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
 
     opens org.example.socialnetworkmap_good to javafx.fxml;
     opens Controller to javafx.fxml;
