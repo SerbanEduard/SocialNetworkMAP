@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainUiController">
+   <children>
+      <Label fx:id="labelWelcome" layoutX="16.0" layoutY="30.0" prefHeight="26.0" prefWidth="569.0" textAlignment="CENTER">
+         <font>
+            <Font name="Droid Sans Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonRequests" layoutX="460.0" layoutY="208.0" mnemonicParsing="false" text="Friend requests">
+         <font>
+            <Font name="Droid Sans Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttonAdd" layoutX="470.0" layoutY="254.0" mnemonicParsing="false" text="Add friends">
+         <font>
+            <Font name="Droid Sans Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttonRemove" layoutX="462.0" layoutY="301.0" mnemonicParsing="false" text="Remove friend">
+         <font>
+            <Font name="Droid Sans Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="labelError" layoutX="16.0" layoutY="427.0" prefHeight="18.0" prefWidth="422.0" textFill="RED">
+         <font>
+            <Font name="Droid Sans" size="12.0" />
+         </font>
+      </Label>
+      <TabPane layoutX="16.0" layoutY="78.0" prefHeight="344.0" prefWidth="422.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Friends">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableFriends" prefHeight="195.0" prefWidth="262.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="columnUsername" prefWidth="75.0" text="Username" />
+                            <TableColumn fx:id="columnSince" prefWidth="75.0" text="Friends since" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Messages">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane layoutX="2.0" layoutY="14.0" prefHeight="245.0" prefWidth="422.0" vbarPolicy="NEVER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <AnchorPane prefHeight="177.0" prefWidth="420.0">
+                                 <children>
+                                    <VBox layoutX="147.0" layoutY="6.0" prefHeight="178.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                        <TextField fx:id="textFieldMessage" layoutX="14.0" layoutY="268.0" prefHeight="26.0" prefWidth="286.0">
+                           <font>
+                              <Font name="Droid Sans Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="buttonSend" layoutX="322.0" layoutY="269.0" mnemonicParsing="false" text="Send">
+                           <font>
+                              <Font name="Droid Sans Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

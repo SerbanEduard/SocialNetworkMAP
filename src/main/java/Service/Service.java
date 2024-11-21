@@ -17,14 +17,33 @@ public class Service {
         this.friendDBRepository = friendDBRepository;
     }
 
-    public void logInUser(String firstName, String lastName){
+    public Iterable<Friend> getAllFriends(User user){
+        //return friendDBRepository.findAllFriends();
+        return null;
+    }
+
+    public User logInUser(String firstName, String lastName){
         Optional<User> user = userDBRepository.logIn(firstName, lastName);
         if(user.isPresent()){
-            return;
+            return user.get();
         }
         else{
             throw new IllegalArgumentException("User not found!");
         }
+    }
+
+    public User signUpUser(String firstName, String lastName){
+        if(!userDBRepository.userExist(firstName, lastName)){
+            User user = new User(firstName, lastName);
+            Optional<User> savedUser = userDBRepository.save(user);
+            if(savedUser.isPresent()){
+                return user;
+            }
+        }
+        else{
+            throw new IllegalArgumentException("User already exists!");
+        }
+        return null;
     }
 
 

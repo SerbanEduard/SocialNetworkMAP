@@ -31,6 +31,23 @@ public class UserDBRepository implements Repository<Integer, User>{
         }
     }
 
+    public boolean userExist(String firstName, String lastName){
+        String sql = "SELECT * FROM users WHERE first_name = ? AND last_name = ?";
+        try(Connection connection = DriverManager.getConnection(url, username, password)){
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
     public Optional<User> logIn(String firstName, String lastName){
         String sql = "SELECT * FROM users WHERE first_name = ? AND last_name = ?";
         try(Connection connection = DriverManager.getConnection(url, username, password)){
