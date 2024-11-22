@@ -6,7 +6,6 @@ public class UserValidator implements Validator<User>{
 
     @Override
     public void validate(User user) throws ValidationException {
-        System.out.println("merge");
         try{
             if(user.getFirstName().equals("") || user.getLastName().equals("")){
                 throw new ValidationException("First name or last name is empty!");

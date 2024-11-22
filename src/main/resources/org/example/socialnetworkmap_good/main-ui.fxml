@@ -11,17 +11,17 @@
             <Font name="Droid Sans Bold" size="21.0" />
          </font>
       </Label>
-      <Button fx:id="buttonRequests" layoutX="460.0" layoutY="208.0" mnemonicParsing="false" text="Friend requests">
+      <Button fx:id="buttonRequests" layoutX="460.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleButtonRequestsClick" text="Friend requests">
          <font>
             <Font name="Droid Sans Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="buttonAdd" layoutX="470.0" layoutY="254.0" mnemonicParsing="false" text="Add friends">
+      <Button fx:id="buttonAdd" layoutX="470.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleButtonAddClick" text="Add friends">
          <font>
             <Font name="Droid Sans Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="buttonRemove" layoutX="462.0" layoutY="301.0" mnemonicParsing="false" text="Remove friend">
+      <Button fx:id="buttonRemove" layoutX="462.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleButtonRemoveClick" text="Remove friend">
          <font>
             <Font name="Droid Sans Bold" size="12.0" />
          </font>
@@ -39,6 +39,7 @@
                      <children>
                         <TableView fx:id="tableFriends" prefHeight="195.0" prefWidth="262.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
+                              <TableColumn fx:id="columnId" prefWidth="75.0" text="Column X" visible="false" />
                             <TableColumn fx:id="columnUsername" prefWidth="75.0" text="Username" />
                             <TableColumn fx:id="columnSince" prefWidth="75.0" text="Friends since" />
                           </columns>

@@ -28,7 +28,7 @@ public class FriendDBRepository implements Repository<Tuple<Integer, Integer>, F
 
     public Friend createFriendFromResultSet(ResultSet resultSet){
         try{
-            Friend friend = new Friend(resultSet.getTimestamp("time_added").toLocalDateTime(), Status.valueOf(resultSet.getString("status")));
+            Friend friend = new Friend(resultSet.getTimestamp("date_added").toLocalDateTime(), Status.valueOf(resultSet.getString("status")));
             Tuple<Integer, Integer> id = new Tuple<>(resultSet.getInt("id_user1"), resultSet.getInt("id_user2"));
             friend.setId(id);
             return friend;
@@ -39,10 +39,12 @@ public class FriendDBRepository implements Repository<Tuple<Integer, Integer>, F
 
     @Override
     public Optional<Friend> findOne(Tuple<Integer, Integer> id) {
-        try(Connection connection = DriverManager.getConnection(url, username, password);
-        ResultSet resultSet = connection.createStatement().executeQuery(String.format(
-                "SELECT * FROM friends WHERE id_user1 = ? AND id_user2 = ?",
-                id.getFirst(), id.getSecond()))){
+        String sql = "SELECT * FROM friends WHERE id_user1 = ? AND id_user2 = ?";
+        try(Connection connection = DriverManager.getConnection(url, username, password)){
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id.getFirst());
+            preparedStatement.setInt(2, id.getSecond());
+            ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 return Optional.ofNullable(createFriendFromResultSet(resultSet));
             }
@@ -50,6 +52,42 @@ public class FriendDBRepository implements Repository<Tuple<Integer, Integer>, F
             throw new RuntimeException(e);
         }
         return Optional.empty();
+    }
+
+    public List<Friend> findAllRequests(User user){
+        List<Friend> friends = new ArrayList<>();
+        String sql = "SELECT * FROM friends WHERE id_user2 = ? AND status = 'PENDING'";
+        try(Connection connection = DriverManager.getConnection(url,username,password)){
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, user.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                friends.add(createFriendFromResultSet(resultSet));
+            }
+            return friends;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public List<Friend> findAllFriends(User user, Integer flag){
+        List<Friend> friends = new ArrayList<>();
+        String sql = "SELECT * FROM friends WHERE id_user1 = ?";
+        if(flag == 1){
+            sql += " AND status = 'ACCEPTED'";
+        }
+        try(Connection connection = DriverManager.getConnection(url,username,password)){
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, user.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                friends.add(createFriendFromResultSet(resultSet));
+            }
+            return friends;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -68,7 +106,7 @@ public class FriendDBRepository implements Repository<Tuple<Integer, Integer>, F
 
     @Override
     public Optional<Friend> save(Friend entity) {
-        String sql = "INSERT INTO friends (id_user1, id_user2, time_added, status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO friends (id_user1, id_user2, date_added, status) VALUES (?, ?, ?, ?)";
         validator.validate(entity);
         try(Connection connection = DriverManager.getConnection(url, username, password)){
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -79,8 +117,10 @@ public class FriendDBRepository implements Repository<Tuple<Integer, Integer>, F
             preparedStatement.setString(4, entity.getStatus().toString());
 
             preparedStatement.execute();
+            System.out.println("Merge");
             return Optional.empty();
         } catch (SQLException e) {
+            e.printStackTrace();
             return Optional.ofNullable(entity);
         }
     }

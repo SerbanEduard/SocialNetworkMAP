@@ -8,6 +8,10 @@ module org.example.socialnetworkmap_good {
 
     opens org.example.socialnetworkmap_good to javafx.fxml;
     opens Controller to javafx.fxml;
+    opens Domain;
+    opens DTO to javafx.fxml;
     exports org.example.socialnetworkmap_good;
     exports Controller;
+    exports DTO;
+    exports Domain;
 }
